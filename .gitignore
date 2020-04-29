@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# OSX stuff
+.DS_Store
+
+# Pytorch stuff
+datasets/
+saved_models/
