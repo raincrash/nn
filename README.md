@@ -7,7 +7,7 @@ A simple boilerplate code (that I use) for training neural networks in Pytorch (
 
 
 TODO:
-[x] Tensorboard support
-[x] FashionMNIST classification
-[ ] Generating new FashionMNIST images
-[ ] Semantic segmentation
+- [x] Tensorboard support
+- [x] FashionMNIST classification
+- [ ] Generating new FashionMNIST images
+- [ ] Semantic segmentation
