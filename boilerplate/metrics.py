@@ -1,5 +1,8 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
+
+from boilerplate.utils import TBoard
 
 
 def get_accuracy(testloader, net):
@@ -35,3 +38,27 @@ def get_accuracy_per_class(testloader, classes, net, number=4):
             classes[i], 100 * class_correct[i] / class_total[i])
         class_accuracies.append(class_predictions)
     return class_accuracies
+
+
+def get_prob_predictions(testloader, classes, net):
+    class_probs = []
+    class_preds = []
+    with torch.no_grad():
+        for data in testloader:
+            images, labels = data
+            output = net(images)
+            class_probs_batch = [F.softmax(el, dim=0) for el in output]
+            _, class_preds_batch = torch.max(output, 1)
+
+            class_probs.append(class_probs_batch)
+            class_preds.append(class_preds_batch)
+
+    test_probs = torch.cat([torch.stack(batch) for batch in class_probs])
+    test_preds = torch.cat(class_preds)
+    return (test_probs, test_preds)
+
+
+def pr_curve_tensorboard(testloader, classes, net, tboard):
+    test_probs, test_preds = get_prob_predictions(testloader, classes, net)
+    for i in range(len(classes)):
+        tboard.add_pr_curve_tensorboard(i, test_probs, test_preds, classes)

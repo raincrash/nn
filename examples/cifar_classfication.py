@@ -11,7 +11,7 @@ from boilerplate.solver import train_network
 from boilerplate.losses import cross_entropy
 from boilerplate.models import cnn_3_32_32_2layers
 from boilerplate.utils import imshow_with_unnormalize, save_net_dict, load_net_from_path, imshow_predictions
-from boilerplate.dataloader import get_CIFAR10_datasets
+from boilerplate.dataloader import get_CIFAR10_dataset
 import numpy as np
 import matplotlib.pyplot as plt
 import torch
@@ -22,7 +22,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 save_path = './saved_models'
 
 
-trainloader, testloader, classes = get_CIFAR10_datasets()
+trainloader, testloader, classes = get_CIFAR10_dataset()
 
 
 """

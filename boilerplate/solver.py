@@ -1,4 +1,7 @@
-def train_network(epochs, trainloader, net, criterion, optimizer):
+from boilerplate.utils import plot_classes_preds, TBoard
+
+
+def train_network(epochs, trainloader, net, criterion, optimizer, classes, writer=None):
     for epoch in range(epochs):  # loop over the dataset multiple times
 
         running_loss = 0.0
@@ -17,9 +20,16 @@ def train_network(epochs, trainloader, net, criterion, optimizer):
 
             # print statistics
             running_loss += loss.item()
-            if i % 2000 == 1999:  # print every 2000 mini-batches
+            if i % 1000 == 999:  # print every 2000 mini-batches
+
                 print("[%d, %5d] loss: %.3f" %
                       (epoch + 1, i + 1, running_loss / 2000))
+
+                writer.scalar('training_loss: ', running_loss /
+                              1000, epoch * len(trainloader) + i)
+                writer.figure('predictions vs. actuals: ', plot_classes_preds(
+                    net, inputs, labels, classes), global_step=epoch * len(trainloader) + i)
+                #
                 running_loss = 0.0
     print("Finished Training")
 

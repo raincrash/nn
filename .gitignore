@@ -135,3 +135,6 @@ dmypy.json
 # Pytorch stuff
 datasets/
 saved_models/
+
+# tensorboard stuff
+runs/
